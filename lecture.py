@@ -249,3 +249,37 @@ def find_k_means_util(points, k) -> list:
     while not centroids.any() == move_centroids(points, closest, centroids).any():
         centroids = move_centroids(points, closest, centroids)
     return centroids
+
+
+"""
+Week 2
+"""
+def find_coin_prob(toss_res: str, k: float) -> float:
+    pr = 1
+    for t in toss_res:
+        if t == 'H':
+            pr *= k
+        else:
+            pr *= (1-k)
+    return pr
+
+
+def find_coin_pro_data(data: float, k: float) -> float:
+    return (k ** (data * 10)) * ((1-k) ** ((1-data) * 10))
+
+
+def find_matrix(data: list, params: list) -> list:
+    matrix = []
+    for i in range(len(params)):
+        matrix.append([])
+        for d in data:
+            matrix[i].append(find_coin_pro_data(d, params[i]))
+    for i in range(len(data)):
+        t = 0
+        for j in range(len(params)):
+            t += matrix[j][i]
+        for j in range(len(params)):
+            matrix[j][i] /= t
+    return matrix
+
+
